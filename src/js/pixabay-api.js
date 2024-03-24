@@ -1,8 +1,6 @@
-import iziToast from "izitoast";
-import "izitoast/dist/css/iziToast.min.css";
- 
-function getImages(image) {
-        const BASE_URL = 'https://pixabay.com/api/'
+import {showLoader} from '../main'
+export default function getImages(image) {
+    const BASE_URL = 'https://pixabay.com/api/'
     const params = new URLSearchParams({
         key: '43041938-51a06b63921488a862c0fcc6d',
         q: image,
@@ -11,11 +9,13 @@ function getImages(image) {
         safesearch: true
     })
     const url = `${BASE_URL}?${params}`
+    showLoader()
     return fetch(url)
-        .then(res => {
-           return res.json()
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(response.status);
+            }
+            return response.json();
         })
-        .catch(err => console.log(err))
-    }
+}
     
-export default getImages

@@ -1,7 +1,16 @@
-const list = document.querySelector('.gallery-image')
+import iziToast from "izitoast";
+import "izitoast/dist/css/iziToast.min.css";
+import {list, lightbox} from '../main'
 
-function makeGallery(arr) {
-  const gallery =  arr.map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => `<li class="gallery-item">
+
+export default function makeGallery(arr) {
+    if (arr.length == 0) {
+        iziToast.error({
+            message: "Sorry, there are no images matching your search query. Please try again!",
+            position: "topRight",
+        })
+    } else {
+        const gallery =  arr.map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => `<li class="gallery-item">
     <a class="gallery-link" href="${largeImageURL}">
     <img class="gallery-image" src="${webformatURL}" alt="${tags}" />
     </a>
@@ -12,7 +21,8 @@ function makeGallery(arr) {
     <p class="pege-item">Downloads<span class="inf-item">${downloads}</span></p>
     </div>
     </li>`).join("")
-    list.innerHTML = gallery
+        list.innerHTML = gallery
+         
+        lightbox.refresh();
+    }
 }
-
-export default makeGallery

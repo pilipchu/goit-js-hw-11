@@ -133,34 +133,43 @@ img {
   line-height: 2;
 }
 
+.loader-cont {
+  margin-top: 20px;
+  height: auto;
+  display: flex;
+  justify-content: center;
+}
+
 .loader {
-  display: inline-block;
   font-size: 48px;
+  color: #4e75ff;
+  display: inline-block;
   font-family: Arial, Helvetica, sans-serif;
-  font-weight: bold;
-  color: #fff;
+  font-weight: 400;
   position: relative;
 }
 
-.loader::before {
-  content: '';
-  position: absolute;
-  left: 34px;
-  bottom: 8px;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  border: 5px solid #fff;
-  border-bottom-color: #ff3d00;
-  box-sizing: border-box;
-  animation: rotation 0.6s linear infinite;
+.loader:after {
+  content: 'Loading';
+  position: relative;
+  z-index: 5;
 }
 
-@keyframes rotation {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
+.loader:before {
+  content: '';
+  height: 6px;
+  border: 1px solid;
+  border-radius: 10px;
+  width: 100%;
+  position: absolute;
+  bottom: -15px;
+  background: linear-gradient(#ff3d00 100%, transparent 0) no-repeat;
+  background-size: 0% auto;
+  animation: 10s lineGrow linear infinite;
+}
+
+@keyframes lineGrow {
+  to {
+    background-size: 100% auto;
   }
 }

@@ -7,37 +7,44 @@ import makeGallery from "./js/render-functions";
 
 
 const formEl = document.querySelector('form')
+const loadItem = document.querySelector('.loader-cont')
+export const list = document.querySelector('.gallery-image')
 
 
-formEl.addEventListener('submit', event => {
-    event.preventDefault()
-    let image = event.target.elements.images.value.trim()
-    if (image === '') {
-        iziToast.info({
-            message: "Line is empty, enter a value",
-            position: "topLeft"
-        })
-        makeGallery([])
-        return 
-    }
-    getImages(image).then(data => {
-        const arr = data.hits
-        if (arr.length <= 0) {
-            iziToast.error({
-            message: "Sorry, there are no images matching your search query. Please try again!",
-            position: "topRight",
+loadItem.style.display = 'none';
+
+export const showLoader = () => {
+    loadItem.style.display = 'flex';
+};
+
+const hideLoader = () => {
+    loadItem.style.display = 'none';
+};
+
+function sendForm(evt) {
+    evt.preventDefault();
+    list.innerHTML = "";
+
+    const image = evt.target.elements.search.value.trim()
+
+    if (image !== '') {
+        getImages(image)
+            .then(data => {
+                makeGallery(data.hits)
+                hideLoader()
             })
-            makeGallery([])
-        } else {
-            makeGallery(arr)
-            lightbox.refresh()
-        }
+        formEl.reset()
+    } else {
+        iziToast.info({
+            message: 'Please complete the field!',
+            position: 'topRight'
+        })
     }
-    )
-    formEl.reset()
-})
+}
 
-var lightbox = new SimpleLightbox('.gallery-link', { 
+formEl.addEventListener('submit', sendForm)
+
+export const lightbox = new SimpleLightbox('.gallery-link', { 
     captionsData: 'alt',
   captionDelay: 250,
     overlayOpacity: 0.8,
