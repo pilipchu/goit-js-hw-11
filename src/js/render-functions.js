@@ -22,7 +22,6 @@ export default function makeGallery(arr) {
     </div>
     </li>`).join("")
         list.innerHTML = gallery
-         
         lightbox.refresh();
     }
 }

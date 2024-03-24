@@ -21,28 +21,26 @@ const hideLoader = () => {
     loadItem.style.display = 'none';
 };
 
-function sendForm(evt) {
-    evt.preventDefault();
-    list.innerHTML = "";
 
-    const image = evt.target.elements.search.value.trim()
+formEl.addEventListener('submit', event => {
+    event.preventDefault()
+    const image = event.target.elements.search.value.trim()
 
     if (image !== '') {
-        getImages(image)
-            .then(data => {
-                makeGallery(data.hits)
-                hideLoader()
-            })
+        getImages(image).then(data => {
+            makeGallery(data.hits)
+            hideLoader()
+        })
         formEl.reset()
     } else {
         iziToast.info({
-            message: 'Please complete the field!',
-            position: 'topRight'
-        })
+        message: "Line is empty, enter a value",
+        position: "topLeft"
+    })
     }
-}
+})
+   
 
-formEl.addEventListener('submit', sendForm)
 
 export const lightbox = new SimpleLightbox('.gallery-link', { 
     captionsData: 'alt',
