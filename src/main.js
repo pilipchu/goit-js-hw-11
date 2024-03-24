@@ -33,6 +33,7 @@ formEl.addEventListener('submit', event => {
         })
         formEl.reset()
     } else {
+        list.innerHTML = ''
         iziToast.info({
         message: "Line is empty, enter a value",
         position: "topLeft"

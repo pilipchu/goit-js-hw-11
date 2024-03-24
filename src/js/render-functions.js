@@ -5,6 +5,7 @@ import {list, lightbox} from '../main'
 
 export default function makeGallery(arr) {
     if (arr.length == 0) {
+        list.innerHTML = ''
         iziToast.error({
             message: "Sorry, there are no images matching your search query. Please try again!",
             position: "topRight",
